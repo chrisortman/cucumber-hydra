@@ -2,9 +2,7 @@ FROM ubuntu:12.04.5
 MAINTAINER Chris Ortman <chrisortman@gmail.com>
 
 # get a compile environment up and running
-# RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe restricted multiverse" >> /etc/apt/sources.list
-# RUN echo "deb http://security.ubuntu.com/ubuntu trusty-security main" >> /etc/apt/sources.list
-RUN apt-get update 
+RUN apt-get update
 RUN apt-get upgrade --assume-yes
 
 # install the prerequisite patches here so that rvm will install under non-root account. 
@@ -23,6 +21,27 @@ RUN apt-get install --assume-yes cups libcups2-dev \
                        autoconf libc6-dev ncurses-dev automake \
                        libtool bison pkg-config gawk libgdbm-dev libffi-dev nodejs
 
+#------------------ FIREFOX ------------------------
+
+RUN apt-get install -y xfonts-100dpi xfonts-75dpi xfonts-scalable \
+                       xfonts-cyrillic xvfb x11-apps  imagemagick \
+                       libasound2 libgtk2.0-dev
+
+RUN mkdir -p /tmp
+
+# I can either add straight from the URL 
+# and then unpack on the server
+# or I can download the archive and add that and
+# it will be extracted for me
+# ADD https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/latest-24.0esr/linux-x86_64/en-US/firefox-24.8.1esr.tar.bz2 /opt/
+ADD https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/31.6.0esr/linux-x86_64/en-US/firefox-31.6.0esr.tar.bz2
+RUN ln -s /opt/firefox/firefox /usr/bin/firefox
+
+# Export display variable for communication between xvfb and firefox
+ENV DISPLAY :99
+#------------------------------------------------------
+
+ADD scripts/xvfb /etc/init.d/xvfb
 # make sure we get right timezone
 RUN echo America/Chicago > /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata
 
@@ -41,28 +60,5 @@ RUN /bin/bash -l -c "gem install bundler --no-ri --no-rdoc"
 ONBUILD ENV USER appuser
 ONBUILD RUN /bin/bash -l -c "source /home/$USER/.rvm/scripts/rvm"
 
-#------------------ FIREFOX ------------------------
-
-USER root
-
-RUN apt-get install -y xfonts-100dpi xfonts-75dpi xfonts-scalable \
-                       xfonts-cyrillic xvfb x11-apps  imagemagick \
-                       libasound2 libgtk2.0-dev
-
-ADD scripts/xvfb /etc/init.d/xvfb
-
-RUN mkdir -p /tmp
-
-# I can either add straight from the URL 
-# and then unpack on the server
-# or I can download the archive and add that and
-# it will be extracted for me
-# ADD https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/latest-24.0esr/linux-x86_64/en-US/firefox-24.8.1esr.tar.bz2 /opt/
-ADD firefox-24.8.1esr.tar.bz2 /opt/
-RUN ln -s /opt/firefox/firefox /usr/bin/firefox
-
-# Export display variable for communication between xvfb and firefox
-ENV DISPLAY :99
-#------------------------------------------------------
 
 

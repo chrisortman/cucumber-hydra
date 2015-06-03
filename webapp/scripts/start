@@ -20,4 +20,4 @@ else
 fi
 
 cd /rails
-SQLITE=true bundle exec rails server
+bundle exec rails server

@@ -22,7 +22,5 @@ fi
 cd /rails
 
 /etc/init.d/xvfb start
-SQLITE=true RAILS_ENV=test bundle exec rake {db:schema:load,seeds:all}
-SQLITE=true RAILS_ENV=test bundle exec rake cucumber
-# SQLITE=true RAILS_ENV=test bundle exec cucumber -p all features/either/routing_form
+bundle exec rake cucumber
 /etc/init.d/xvfb stop

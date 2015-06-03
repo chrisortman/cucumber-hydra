@@ -21,6 +21,7 @@ fi
 cd /rails
 
 bundle install
+RAILS_ENV=development bundle install
 RAILS_ENV=test bundle install
-SQLITE=true bundle exec rake db:schema:load
-SQLITE=true bundle exec rake seeds:all
+bundle exec rake db:schema:load
+bundle exec rake seeds:all
