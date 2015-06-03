@@ -34,7 +34,7 @@ RUN mkdir -p /tmp
 # or I can download the archive and add that and
 # it will be extracted for me
 # ADD https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/latest-24.0esr/linux-x86_64/en-US/firefox-24.8.1esr.tar.bz2 /opt/
-ADD https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/31.6.0esr/linux-x86_64/en-US/firefox-31.6.0esr.tar.bz2
+ADD https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/31.6.0esr/linux-x86_64/en-US/firefox-31.6.0esr.tar.bz2 /opt/
 RUN ln -s /opt/firefox/firefox /usr/bin/firefox
 
 # Export display variable for communication between xvfb and firefox
