@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install --assume-yes cups libcups2-dev \
                        zlib1g zlib1g-dev libssl-dev libyaml-dev \ 
                        libsqlite3-dev sqlite3 libxml2-dev libxslt-dev \
                        autoconf libc6-dev ncurses-dev automake \
-                       strace dtrace \
+                       strace \
                        libtool bison pkg-config gawk libgdbm-dev libffi-dev nodejs
 
 #------------------ FIREFOX ------------------------
