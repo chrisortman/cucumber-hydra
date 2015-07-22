@@ -1,16 +1,12 @@
 FROM ubuntu:12.04.5
 MAINTAINER Chris Ortman <chrisortman@gmail.com>
 
-# get a compile environment up and running
-RUN apt-get update
-RUN apt-get upgrade --assume-yes
-
 # install the prerequisite patches here so that rvm will install under non-root account. 
 #   I listed cups and freetds / odbc first since those were the ones that gave me
 #   the most headache in regard to package dependencies
 #   I figure this way they get first say in what version of what gets installed so 
 #   hopefully fewer conflicts
-RUN apt-get install --assume-yes cups libcups2-dev \
+RUN apt-get update && apt-get install --assume-yes cups libcups2-dev \
                        freetds-dev freetds-bin tdsodbc \
                        unixodbc unixodbc-dev \
                        openssh-server git-core openssh-client curl vim \
@@ -19,11 +15,12 @@ RUN apt-get install --assume-yes cups libcups2-dev \
                        zlib1g zlib1g-dev libssl-dev libyaml-dev \ 
                        libsqlite3-dev sqlite3 libxml2-dev libxslt-dev \
                        autoconf libc6-dev ncurses-dev automake \
+                       strace dtrace \
                        libtool bison pkg-config gawk libgdbm-dev libffi-dev nodejs
 
 #------------------ FIREFOX ------------------------
 
-RUN apt-get install -y xfonts-100dpi xfonts-75dpi xfonts-scalable \
+RUN apt-get update && apt-get install -y xfonts-100dpi xfonts-75dpi xfonts-scalable \
                        xfonts-cyrillic xvfb x11-apps  imagemagick \
                        libasound2 libgtk2.0-dev
 
