@@ -31,7 +31,8 @@ RUN mkdir -p /tmp
 # or I can download the archive and add that and
 # it will be extracted for me
 # ADD https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/latest-24.0esr/linux-x86_64/en-US/firefox-24.8.1esr.tar.bz2 /opt/
-ADD https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/31.6.0esr/linux-x86_64/en-US/firefox-31.6.0esr.tar.bz2 /opt/
+ADD https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/38.1.0esr/linux-x86_64/en-US/firefox-38.1.0esr.tar.bz2 /opt/firefox.tar.bz2
+RUN cd /opt && tar -vxjf firefox.tar.bz2 && rm firefox.tar.bz2 && cd / 
 RUN ln -s /opt/firefox/firefox /usr/bin/firefox
 
 # Export display variable for communication between xvfb and firefox
@@ -56,6 +57,3 @@ RUN /bin/bash -l -c "gem install bundler --no-ri --no-rdoc"
 # make sure rvm is available in our shell when we run the container
 ONBUILD ENV USER appuser
 ONBUILD RUN /bin/bash -l -c "source /home/$USER/.rvm/scripts/rvm"
-
-
-
